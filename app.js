@@ -1,7 +1,7 @@
 const display = document.querySelector("#display");
 const btns = document.querySelectorAll("button");
 
-display.textContent = 0;
+renderToUser();
 
 //after 1rst op, save result back to val1
 let val1 = "";
@@ -42,7 +42,7 @@ function operate(num1, num2, operator) {
       result = divide(num1, num2);
       break;
   }
-  return result;
+  return formatResult(result);
 }
 
 function placeNumber(input) {
@@ -70,8 +70,15 @@ function switchBuildVal1(bool) {
 }
 
 function checkIfOpReady() {
+  //check for div by 0.
+  if (parseFloat(val2) === 0 && operator === "/") {
+    alert("Are you mad?! Dividing by 0 will destroy the universe!");
+    return;
+  }
+
   const val1Ready = /[0-9]/.test(val1); //check for at least 1 num.
   const val2Ready = /[0-9]/.test(val2);
+
   return val1Ready && val2Ready && operator;
 }
 
@@ -125,6 +132,14 @@ function resetApp() {
   renderToUser();
 }
 
+function formatResult(result) {
+  if (result.toString().includes(".")) {
+    return parseFloat(result.toFixed(2));
+  }
+
+  return result;
+}
+
 function sortInput(event) {
   const input = event.target.id;
 
@@ -151,6 +166,8 @@ btns.forEach((btn) => {
 
 /**
  * Amost done, still need to handle div by 0, and making sure decimal vals are of
- * appropriate length.
+ * appropriate length. Dont, push to git.
+ *
+ * On screen decerease maybe change font size of display, and add keyboard support.
  *
  */
