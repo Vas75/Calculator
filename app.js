@@ -134,9 +134,14 @@ function resetApp() {
 }
 
 function formatResult(result) {
-  const numOfDeciPlaces = result.toString().split(".")[1].length;
+  const resultAsStr = result.toString();
+  let deciPlaces;
 
-  return numOfDeciPlaces > 3 ? parseFloat(result.toFixed(3)) : result;
+  if (resultAsStr.includes(".")) {
+    deciPlaces = resultAsStr.split(".")[1].length;
+  }
+
+  return deciPlaces > 3 ? parseFloat(result.toFixed(3)) : result;
 }
 
 function sortInput(input) {
