@@ -92,22 +92,23 @@ function placeOperator(input) {
     if (checkIfOpReady()) {
       const result = operate(parseFloat(val1), parseFloat(val2), operator);
       setForChainOp(result, input);
-      renderToUser(result, input);
     }
   }
 }
 
 function setForChainOp(result, newOperator) {
-  val1 = result;
+  val1 = result.toString();
   val2 = "";
   operator = newOperator;
+  renderToUser(result, newOperator);
 }
 
-function setForNewOp() {
+function setForNewOp(result) {
   buildVal1 = true;
-  val1 = "";
+  val1 = result.toString();
   val2 = "";
   operator = "";
+  renderToUser(result);
 }
 
 function renderToUser(n1, n2 = "", oper = "") {
@@ -148,8 +149,7 @@ function sortInput(input) {
     placeDecimal();
   } else if (input === "=" && checkIfOpReady()) {
     const result = operate(parseFloat(val1), parseFloat(val2), operator);
-    renderToUser(result);
-    setForNewOp();
+    setForNewOp(result);
   } else if ("+-*/".includes(input)) {
     placeOperator(input);
   } else if (input === "Delete") {
