@@ -134,12 +134,9 @@ function resetApp() {
 }
 
 function formatResult(result) {
-  //no more than 2 dec places allowed in floats.
-  if (result.toString().includes(".")) {
-    return parseFloat(result.toFixed(2));
-  }
+  const numOfDeciPlaces = result.toString().split(".")[1].length;
 
-  return result;
+  return numOfDeciPlaces > 3 ? parseFloat(result.toFixed(3)) : result;
 }
 
 function sortInput(input) {
