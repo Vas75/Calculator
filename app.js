@@ -141,9 +141,7 @@ function formatResult(result) {
   return result;
 }
 
-function sortInput(event) {
-  const input = event.target.id;
-
+function sortInput(input) {
   if (/[0-9]/.test(input)) {
     placeNumber(input);
   } else if (input === ".") {
@@ -154,7 +152,7 @@ function sortInput(event) {
     setForNewOp();
   } else if ("+-*/".includes(input)) {
     placeOperator(input);
-  } else if (input === "delete") {
+  } else if (input === "Delete") {
     deleteChar();
   } else if (input === "clear") {
     resetApp();
@@ -162,9 +160,23 @@ function sortInput(event) {
 }
 
 btns.forEach((btn) => {
-  btn.addEventListener("click", sortInput);
+  btn.addEventListener("click", (e) => {
+    sortInput(e.target.id);
+  });
 });
 
+window.addEventListener("keydown", (e) => {
+  const key = e.key;
+
+  if (key === "Enter") {
+    e.preventDefault();
+    return;
+  } else if (key === "c") {
+    sortInput("clear");
+  } else {
+    sortInput(key);
+  }
+});
 /*
  *
  * On screen decerease maybe change font size of display, and add keyboard support.
