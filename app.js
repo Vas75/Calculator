@@ -75,8 +75,8 @@ function checkIfOpReady() {
     alert("Are you mad?! Dividing by 0 will destroy the universe!");
     return;
   }
-
-  const val1Ready = /[0-9]/.test(val1); //check for at least 1 num.
+  //check for at least 1 num.
+  const val1Ready = /[0-9]/.test(val1);
   const val2Ready = /[0-9]/.test(val2);
 
   return val1Ready && val2Ready && operator;
@@ -88,7 +88,7 @@ function placeOperator(input) {
     switchBuildVal1(false);
     renderToUser(val1, operator);
   } else {
-    //if 2nd operator input, attempts to run operation.
+    //if a 2nd operator is input, attempts to run operation.
     if (checkIfOpReady()) {
       const result = operate(parseFloat(val1), parseFloat(val2), operator);
       setForChainOp(result, input);
@@ -111,7 +111,7 @@ function setForNewOp() {
 }
 
 function renderToUser(n1, n2 = "", oper = "") {
-  n1 = n1 ? n1 : 0; //n1 may be passed an '', this fills div with 0 if ''.
+  n1 = n1 ? n1 : 0; //n1 may be passed empty str, this fills div with 0 if ''.
   display.textContent = `${n1} ${oper} ${n2}`;
 }
 
@@ -133,6 +133,7 @@ function resetApp() {
 }
 
 function formatResult(result) {
+  //no more than 2 dec places allowed in floats.
   if (result.toString().includes(".")) {
     return parseFloat(result.toFixed(2));
   }
@@ -164,9 +165,7 @@ btns.forEach((btn) => {
   btn.addEventListener("click", sortInput);
 });
 
-/**
- * Amost done, still need to handle div by 0, and making sure decimal vals are of
- * appropriate length. Dont, push to git.
+/*
  *
  * On screen decerease maybe change font size of display, and add keyboard support.
  *
